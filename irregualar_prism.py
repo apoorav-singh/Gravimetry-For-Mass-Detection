@@ -6,7 +6,6 @@
 import numpy as np 
 from matplotlib import pyplot as plt # Plotting
 from tqdm import tqdm
-np.seterr(divide = 'ignore') 
 
 
 G = 6.673e-4 # Universal Gravitational Constant
@@ -68,12 +67,25 @@ print("Number of Prism in the simulation: ", X.size*Y.size)
 Z = np.transpose(Z)
 
 # #Plotting
-fig = plt.figure()
-ax = plt.axes(projection ='3d')
+# set up a figure twice as wide as it is tall
+fig = plt.figure(figsize=plt.figaspect(0.5))
+ax = fig.add_subplot(1, 2, 1, projection='3d')
+
+ax.set_xticks(np.arange(0, max(X), 50000))
+ax.set_xticks(np.arange(0, max(Y), 3000))
+
+
+ax.set_title("Terrain")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
 
 figure = ax.plot_surface(xx, yy, Z, cmap='PuBuGn')
 
 # plt.show()
+
+
+
 
 print("Define the observation plane in terms of z for example: 20 and bottom of the prism -10000")
 z = 20 # float(input("Enter Z-Plane: "))
@@ -107,18 +119,18 @@ for i_x in tqdm(X_iter[:-1]):
         for i_xx in [0, 1]:
             for i_yy in [0, 1]:
                 for i_zz in [0, 1]:
-                    xx1 = (xx - x_pos[i_yy])**2
-                    yy1 = (yy - y_pos[i_xx])**2
+                    xx1 = (xx - x_pos[i_xx])**2
+                    yy1 = (yy - y_pos[i_yy])**2
                     zz1 = (z - z_pos[i_zz])**2
                     r = np.sqrt(xx1 + yy1 + zz1)
                     if ((i_xx + i_yy + i_zz)%2 == 0):
-                        s = 1
-                    else:
                         s = -1
+                    else:
+                        s = 1
                         
-                    foo_gzz1 = (z - z_pos[i_zz])*np.arctan((xx - x_pos[i_yy])*(yy - y_pos[i_xx])/ (r*(z - z_pos[i_zz])))
-                    foo_gzz2 = (xx - x_pos[i_yy])*np.log((r + (yy - y_pos[i_xx])))
-                    foo_gzz3 = (yy - y_pos[i_xx])*np.log(r + (xx - x_pos[i_yy]))
+                    foo_gzz1 = (z - z_pos[i_zz])*np.arctan((xx - x_pos[i_xx])*(yy - y_pos[i_yy])/ (r*(z - z_pos[i_zz])))
+                    foo_gzz2 = (xx - x_pos[i_xx])*np.log((r + (yy - y_pos[i_yy])))
+                    foo_gzz3 = (yy - y_pos[i_yy])*np.log(r + (xx - x_pos[i_xx]))
                     valuez = C*s*(foo_gzz1 - foo_gzz2 - foo_gzz3)
                     
                     if (np.isnan(foo_gzz1).any() or np.isnan(foo_gzz2).any() or np.isnan(foo_gzz3).any()):
@@ -128,11 +140,18 @@ for i_x in tqdm(X_iter[:-1]):
                     # valuezz = 0
                     # gzz = (gzz + valuezz)
                     valz = (valz + valuez)
-                    
 
-fig = plt.figure()
-ax = plt.axes(projection ='3d')
 
-figure = ax.plot_surface(xx, yy, valz - 150, cmap='YlGnBu_r')
+
+save_valz = np.save('valz', valz)
+
+
+ax = fig.add_subplot(1, 2, 2, projection='3d')
+ax.set_title(r"$|\vec{g}_z|\ data$")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel(r"$|\vec{g}_z|$")
+
+figure = ax.plot_surface(xx*A, yy*A, valz - 150, cmap='YlGnBu_r')
 plt.show()
 
