@@ -1,3 +1,5 @@
+# This piece of code performs fourier transform
+
 import numpy as np 
 from matplotlib import pyplot as plt # Plotting
 
@@ -55,19 +57,19 @@ for i_x in tqdm(X_iter):
 print("Number of Prism in the simulation: ", X.size*Y.size)
 [xx ,yy] = np.meshgrid(X, Y)
 
-xx = 1/xx
-yy = 1/yy
+K_xx = 1/xx
+K_yy = 1/yy
 
+# save_k_x = np.save("k_x", K_xx)
+# save_k_y = np.save("k_y", K_yy)
 
+K = np.empty(K_xx.shape)
+K = np.sqrt((K_yy**2 + K_xx**2))
 
 fig = plt.figure() 
 ax = plt.axes(projection ='3d')
-
 L3 = np.abs(np.fft.fft(df_1))
-
-
-
-figure = ax.plot_surface(xx, yy, L3,  cmap='YlGnBu_r')
+figure = ax.plot_surface(K_xx, K_yy, L3,  cmap='YlGnBu_r')
 
 
 plt.show()
