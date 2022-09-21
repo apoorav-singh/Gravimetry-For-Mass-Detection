@@ -151,6 +151,8 @@ for i_x in tqdm(X_iter[:-1]):
 
 
 save_valz = np.save("valz", valz)
+xx = np.save("xx", xx)
+yy = np.save("yy", yy)
 
 
 ax = fig.add_subplot(1, 2, 2, projection="3d")

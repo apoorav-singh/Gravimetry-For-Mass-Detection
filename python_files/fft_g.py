@@ -5,6 +5,7 @@
 
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.io import savemat
 
 # Importing Data Frame
 
@@ -37,14 +38,14 @@ T_11 = A * fft_valz
 inv_fft_T_11 = np.fft.ifft(T_11)
 # ax[0][0] = plt.axes(projection ='3d')
 ax[0][0].set_title('Gravity Gradient Component (1,1)')
-ax[0][0].plot_surface(xx, yy, inv_fft_T_11,  cmap='YlOrRd')
+ax[0][0].plot_surface(xx, yy, inv_fft_T_11.imag,  cmap='YlOrRd')
 
 
 T_12 = B * fft_valz
 inv_fft_T_12 = np.fft.ifft(T_12)
 # ax[0][1] = plt.axes(projection ='3d')
 ax[0][1].set_title('Gravity Gradient Component (1,2)')
-ax[0][1].plot_surface(xx, yy, inv_fft_T_12,  cmap='YlOrRd')
+ax[0][1].plot_surface(xx, yy, inv_fft_T_12.imag,  cmap='YlOrRd')
 
 
 
@@ -53,7 +54,7 @@ T_13 = C* fft_valz
 inv_fft_T_13 = np.fft.ifft(T_13)
 # ax[0][2] = plt.axes(projection ='3d')
 ax[0][2].set_title('Gravity Gradient Component (1,3)')
-ax[0][2].plot_surface(xx, yy, inv_fft_T_13,  cmap='YlOrRd')
+ax[0][2].plot_surface(xx, yy, inv_fft_T_13.imag,  cmap='YlOrRd')
 
 
 
@@ -61,7 +62,7 @@ T_21 = D* fft_valz
 inv_fft_T_21 = np.fft.ifft(T_21)
 # ax[1][0] = plt.axes(projection ='3d')
 ax[1][0].set_title('Gravity Gradient Component (2,1)')
-ax[1][0].plot_surface(xx, yy, inv_fft_T_21,  cmap='YlOrRd')
+ax[1][0].plot_surface(xx, yy, inv_fft_T_21.imag,  cmap='YlOrRd')
 
 
 
@@ -69,35 +70,52 @@ T_22 = E* fft_valz
 inv_fft_T_22 = np.fft.ifft(T_22)
 # ax[1][1] = plt.axes(projection ='3d')
 ax[1][1].set_title('Gravity Gradient Component (2,2)')
-ax[1][1].plot_surface(xx, yy, inv_fft_T_22,  cmap='YlOrRd')
+ax[1][1].plot_surface(xx, yy, inv_fft_T_22.imag,  cmap='YlOrRd')
 
 
 T_23 = F* fft_valz
 inv_fft_T_23 = np.fft.ifft(T_23)
 # ax[1][2] = plt.axes(projection ='3d')
 ax[1][2].set_title('Gravity Gradient Component (2,3)')
-ax[1][2].plot_surface(xx, yy, inv_fft_T_23,  cmap='YlOrRd')
+ax[1][2].plot_surface(xx, yy, inv_fft_T_23.imag,  cmap='YlOrRd')
 
 
 T_31 = G* fft_valz
 inv_fft_T_31 = np.fft.ifft(T_31)
 # ax[2][0] = plt.axes(projection ='3d')
 ax[2][0].set_title('Gravity Gradient Component (3,1)')
-ax[2][0].plot_surface(xx, yy, inv_fft_T_31,  cmap='YlOrRd')
+ax[2][0].plot_surface(xx, yy, inv_fft_T_31.imag,  cmap='YlOrRd')
 
 
 T_32 = H* fft_valz
 inv_fft_T_32 = np.fft.ifft(T_32)
 # ax[2][0] = plt.axes(projection ='3d')
 ax[2][1].set_title('Gravity Gradient Component (3,2)')
-ax[2][1].plot_surface(xx, yy, inv_fft_T_32,  cmap='YlOrRd')
+ax[2][1].plot_surface(xx, yy, inv_fft_T_32.imag,  cmap='YlOrRd')
 
 
 T_33 = I* fft_valz
 inv_fft_T_33 = np.fft.ifft(T_33)
 # ax[2][2] = plt.axes(projection ='3d')
 ax[2][2].set_title('Gravity Gradient Component (3,3)')
-ax[2][2].plot_surface(xx, yy, inv_fft_T_33,  cmap='YlOrRd')
+ax[2][2].plot_surface(xx, yy, inv_fft_T_33.imag,  cmap='YlOrRd')
+
+# in_ch = input("Do you wish to save the generated data in .mat format(MATLAB) (y/n): ")
+
+# if (in_ch == "y"):
+#     savemat("xx", xx)
+#     savemat("yy", yy)
+#     savemat(" inv_fft_T_11",  inv_fft_T_11)
+#     savemat(" inv_fft_T_12",  inv_fft_T_12)
+#     savemat(" inv_fft_T_13",  inv_fft_T_13)
+#     savemat(" inv_fft_T_21",  inv_fft_T_21)
+#     savemat(" inv_fft_T_22",  inv_fft_T_22)
+#     savemat(" inv_fft_T_23",  inv_fft_T_23)
+#     savemat(" inv_fft_T_31",  inv_fft_T_31)
+#     savemat(" inv_fft_T_32",  inv_fft_T_32)
+#     savemat(" inv_fft_T_33",  inv_fft_T_33)
+# else:
+#     pass
 
 plt.show()
 

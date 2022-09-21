@@ -80,8 +80,16 @@ if (in_choice == "y"):
     try:
         print("\n")
         print("Generating Terrain value")
-        system(r'python python_files/irregualar_prism.py')
         
+        in_pr = input("Enter 1 for prism and 0 for irregular surface: ")
+
+        if (in_pr == "0"):
+            system(r'python python_files/irregualar_prism.py')
+        elif(in_pr == "1"):
+            system(r'python python_files/single_prism.py')
+        else:
+            print("Wrong Choice. Program Terminated")
+            exit()        
 
     except:
         print("Error: irregular_prism.py not found!")
