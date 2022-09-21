@@ -17,7 +17,7 @@ B = 10000  # Unit Conversion from mGal/Km to E
 
 # Importing Data Frame
 
-df_2 = np.genfromtxt("terrain.txt", dtype=float, encoding=None, delimiter=",")
+df_2 = np.genfromtxt(r"data/terrain.txt", dtype=float, encoding=None, delimiter=",")
 
 # Length of the Array
 L = np.array(df_2.shape)
