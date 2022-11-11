@@ -5,11 +5,13 @@ from matplotlib import pyplot as plt
 
 # Defining X-axis and Y-axis
 
-x = np.arange(-10,10,0.1) # [m]
-y = np.arange(-10,10,0.1) # [m]
+# x = np.arange(-10,10,0.3) # [m]
+# y = np.arange(-10,10,0.3) # [m]
+x = np.arange(-10,10,0.3) # [m]
+y = np.arange(-10,10,0.3) # [m]
 
 # Surface where data is computed
-z = 3 # [m]
+z = 5 # [m]
 
 # Density
 d = 11.11 # [g/cc]
@@ -46,15 +48,26 @@ for i in range(x_pos.size):
             gx1 = gx1 + gx;
 
 
-figure, ax = plt.subplots(1, 3,figsize=(10,10),subplot_kw=dict(projection='3d'))
-# ax[0][0].set_title('Gx')
-ax[0].plot_surface(A*xx, A*yy, gx1,  cmap='YlOrRd')
+figure_1, ax_1 = plt.subplots(1, 1,figsize=(10,10),subplot_kw=dict(projection='3d'))
+ax_1.set_title(r'$g_x$')
+ax_1.set_xlabel("X")
+ax_1.set_ylabel("Y")
+ax_1.set_zlabel("Gravity anomaly in mGal")
+ax_1.plot_surface(xx, yy, gx1,  cmap='YlOrRd')
 
-# ax[0][1].set_title('Gy')
-ax[1].plot_surface(A*xx, A*yy, gy1,  cmap='YlOrRd')
+figure_2, ax_2 = plt.subplots(1, 1,figsize=(10,10),subplot_kw=dict(projection='3d'))
+ax_2.set_xlabel("X")
+ax_2.set_ylabel("Y")
+ax_2.set_zlabel("Gravity anomaly in mGal")
+ax_2.set_title(r'$g_y$')
+ax_2.plot_surface(xx, yy, gy1,  cmap='YlOrRd')
 
-# ax[0][2].set_title('Gz')
-ax[2].plot_surface(A*xx, A*yy, gz1,  cmap='YlOrRd')
+figure_3, ax_3 = plt.subplots(1, 1,figsize=(10,10),subplot_kw=dict(projection='3d'))
+ax_3.set_xlabel("X")
+ax_3.set_ylabel("Y")
+ax_3.set_zlabel("Gravity anomaly in mGal")
+ax_3.set_title(r'$g_z$')
+ax_3.plot_surface(xx, yy, gz1,  cmap='YlOrRd')
 
 # Saving Values
 save_valz = np.save("valz", gz1)

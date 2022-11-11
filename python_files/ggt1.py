@@ -14,7 +14,8 @@ yy = np.load("yy.npy")
 
 K_xx = 1 / xx
 K_yy = 1 / yy
-fft_valz = np.fft.fft(df_1)
+fft_valz = np.fft.fft(np.ifft.fftshift(df_1))
+# fft_valz = np.fft.fft(df_1)
 
 mod_K = np.sqrt((K_yy ** 2 + K_xx ** 2))
 shape_1 = mod_K.shape
