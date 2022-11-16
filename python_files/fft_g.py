@@ -23,9 +23,9 @@ yy = np.load("yy.npy")
 
 # Define all the tensor components
 A = (-1 * k_xx ** 2) / mod_k
-B = (-1 * k_xx * k_yy) / mod_k
+B = (1 * k_xx * k_yy) / mod_k
 C = -1j * k_xx
-D = (-1 * k_xx * k_yy) / mod_k
+D = (1 * k_xx * k_yy) / mod_k
 E = (-1 * k_yy ** 2) / mod_k
 F = -1j * k_yy
 G = -1j * k_xx
@@ -35,6 +35,7 @@ I = mod_k
 # | A B C |
 # | D E F |
 # | G H I |
+
 
 figure, ax = plt.subplots(3,3,figsize=(10,10),subplot_kw=dict(projection='3d'))
 
