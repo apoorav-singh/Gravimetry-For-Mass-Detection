@@ -5,27 +5,26 @@ from matplotlib import pyplot as plt
 
 # Defining X-axis and Y-axis
 
-# x = np.arange(-10,10,0.3) # [m]
-# y = np.arange(-10,10,0.3) # [m]
-x = np.arange(-20,20,0.03) # [m]
-y = np.arange(-20,20,0.03) # [m]
+
+x = np.arange(-20,20,0.03)*1e3 # [cm]
+y = np.arange(-20,20,0.03)*1e3 # [cm]
 
 # Surface where data is computed
-z = 5 # [m]
+z = 5e3 # [cm]
 
 # Density
 d = 11.11 # [g/cc]
 
 # Mesh
 [xx, yy] = np.meshgrid(x, y)
-A = 1e-3 # [m] to [km]
+
 
 # Definig parameters for Prism model
-x_pos = np.array([0, 2]) # [FirstCorner SecondCorner]
-y_pos = np.array([0, 2]) # [FirstCorner SecondCorner]
-z_pos = np.array([0, 2]) # [FirstCorner SecondCorner]
+x_pos = np.array([0, 2])*1e3 # [FirstCorner SecondCorner]
+y_pos = np.array([0, 2])*1e3 # [FirstCorner SecondCorner]
+z_pos = np.array([0, 2])*1e3 # [FirstCorner SecondCorner]
 
-G = 6.67384e-3;   # Define Gravitational constant
+G = 6.67384e-8;   # Define Gravitational constant
 c = G*d;  # multiplication of gravitational constant and density 
 
 gz1 = np.empty(xx.shape)
