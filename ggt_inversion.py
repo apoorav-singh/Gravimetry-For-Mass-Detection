@@ -7,8 +7,10 @@ import file_management
 # del_x = 0.87
 
 # Defining X-axis and Y-axis
-x = np.arange(-80, 80, 0.87) # [m unit]  
-y = np.arange(-80, 80, 0.87) # [m unit]
+# x = np.arange(-8, 8, 0.087) # [m unit]  
+# y = np.arange(-8, 8, 0.087) # [m unit]
+x = np.arange(-4, 4, 0.087/2) # [m unit]  
+y = np.arange(-4, 4, 0.087/2) # [m unit]
 conv_B = 1e5 # Multiply with conv_B for convert the unit m/s^2 to mGal
 
 
@@ -16,7 +18,8 @@ conv_B = 1e5 # Multiply with conv_B for convert the unit m/s^2 to mGal
 # z = 8.3 # [m unit]
 z = float(input("Enter the depth of the object: "))
 # Density
-d = 3889.096 # [Kg/m^3]
+# d = 3889.096 # [Kg/m^3]
+d = 1400 # [Kg/m^3]
 # Mesh
 [xx, yy] = np.meshgrid(x, y)
 k_xx = 1 / xx # inverse of length in the unit m^-1
@@ -27,9 +30,14 @@ k_yy = 1 / yy
 #
 # ---------------------------------------------------------------
 # Definig parameters for Prism model
-x_pos = np.array([0 , 66.8 ]) # [FirstCorner SecondCorner]
-y_pos = np.array([0 , 7.1 ]) # [FirstCorner SecondCorner]
-z_pos = np.array([0 , 8.2 ]) # [FirstCorner SecondCorner]
+# x_pos = np.array([0 , 66.8 ]) # [FirstCorner SecondCorner]
+# y_pos = np.array([0 , 7.1 ]) # [FirstCorner SecondCorner]
+# z_pos = np.array([0 , 8.2 ]) # [FirstCorner SecondCorner]
+
+x_pos = np.array([0 , 0.12 ]) # [FirstCorner SecondCorner]
+y_pos = np.array([0 , 0.09 ]) # [FirstCorner SecondCorner]
+z_pos = np.array([0 , 0.05 ]) # [FirstCorner SecondCorner]
+
 G_1 = 6.67384e-11   # 6.674 \times 10^{−11} # Define Gravitational constant SI unit
 c = G_1*d  # Multiplication of gravitational constant and density 
 # ---------------------------------------------------------------
@@ -140,10 +148,10 @@ for i in range(size[0]):
         M_data[i][j] = 4*(g_data[i][j]) /(G_1*T_data[i][j])  
 fig = plt.figure()
 ax = plt.axes(projection ='3d')
-# ax.plot_surface(xx, yy, M_data , cmap = 'plasma')
-cont = ax.contourf(xx, yy, M_data , cmap = 'plasma')
+ax.plot_surface(xx, yy, M_data , cmap = 'plasma')
+# cont = ax.contourf(xx, yy, M_data , cmap = 'plasma')
 # Add a color bar which maps values to colors.
-fig.colorbar(cont, shrink=0.5, aspect=5)
+# fig.colorbar(cont, shrink=0.5, aspect=5)
 print("Expected mass of the Anomaly is:{}".format(np.sum(M_data)))
 ax.set_xlabel("x (m)",  fontsize = 15)
 ax.set_ylabel("y (m)",  fontsize = 15)
@@ -152,4 +160,4 @@ ax.view_init(90, 0)
 ax.set_title('Mass of the anomaly at depth of {} m'.format(z), fontsize = 20)
 image_format, image_name = file_management.file_gen(depth = int(z), graph_save = "mass_anomaly")
 fig.savefig(image_name, format=image_format, dpi=1200)
-# plt.show()
+plt.show()
