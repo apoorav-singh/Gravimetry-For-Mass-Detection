@@ -3,14 +3,14 @@ import numpy as np
 from matplotlib import pyplot as plt
 from math import *
 import file_management
+import surf2stl
 
 # del_x = 0.87
 
 # Defining X-axis and Y-axis
-# x = np.arange(-8, 8, 0.087) # [m unit]  
-# y = np.arange(-8, 8, 0.087) # [m unit]
-x = np.arange(-4, 4, 0.087/2) # [m unit]  
-y = np.arange(-4, 4, 0.087/2) # [m unit]
+x = np.arange(-8, 8, 0.087) # [m unit]  
+y = np.arange(-8, 8, 0.087) # [m unit]
+
 conv_B = 1e5 # Multiply with conv_B for convert the unit m/s^2 to mGal
 
 
@@ -34,9 +34,9 @@ k_yy = 1 / yy
 # y_pos = np.array([0 , 7.1 ]) # [FirstCorner SecondCorner]
 # z_pos = np.array([0 , 8.2 ]) # [FirstCorner SecondCorner]
 
-x_pos = np.array([0 , 0.12 ]) # [FirstCorner SecondCorner]
-y_pos = np.array([0 , 0.09 ]) # [FirstCorner SecondCorner]
-z_pos = np.array([0 , 0.05 ]) # [FirstCorner SecondCorner]
+x_pos = np.array([0 , 1.2 ]) # [FirstCorner SecondCorner]
+y_pos = np.array([0 , 0.9 ]) # [FirstCorner SecondCorner]
+z_pos = np.array([0 , 0.5 ]) # [FirstCorner SecondCorner]
 
 G_1 = 6.67384e-11   # 6.674 \times 10^{−11} # Define Gravitational constant SI unit
 c = G_1*d  # Multiplication of gravitational constant and density 
@@ -148,10 +148,13 @@ for i in range(size[0]):
         M_data[i][j] = 4*(g_data[i][j]) /(G_1*T_data[i][j])  
 fig = plt.figure()
 ax = plt.axes(projection ='3d')
-ax.plot_surface(xx, yy, M_data , cmap = 'plasma')
-# cont = ax.contourf(xx, yy, M_data , cmap = 'plasma')
+# ax.plot_surface(xx, yy, M_data , cmap = 'plasma')
+cont = ax.contourf(xx, yy, M_data , cmap = 'plasma')
 # Add a color bar which maps values to colors.
-# fig.colorbar(cont, shrink=0.5, aspect=5)
+fig.colorbar(cont, shrink=0.5, aspect=5)
+
+np.savetxt('mass.csv', M_data, delimiter=',')
+
 print("Expected mass of the Anomaly is:{}".format(np.sum(M_data)))
 ax.set_xlabel("x (m)",  fontsize = 15)
 ax.set_ylabel("y (m)",  fontsize = 15)
@@ -160,4 +163,6 @@ ax.view_init(90, 0)
 ax.set_title('Mass of the anomaly at depth of {} m'.format(z), fontsize = 20)
 image_format, image_name = file_management.file_gen(depth = int(z), graph_save = "mass_anomaly")
 fig.savefig(image_name, format=image_format, dpi=1200)
+# surf2stl.write('3d-mdata.stl', xx, yy, 100*M_data)
+# Mesh Generator
 plt.show()
