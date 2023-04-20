@@ -8,8 +8,10 @@ import surf2stl
 # del_x = 0.87
 
 # Defining X-axis and Y-axis
-x = np.arange(-8, 8, 0.087) # [m unit]  
-y = np.arange(-8, 8, 0.087) # [m unit]
+# x = np.arange(-8, 8, 0.087) # [m unit]  
+# y = np.arange(-8, 8, 0.087) # [m unit]
+x = np.arange(-4, 4, 0.087) # [m unit]  
+y = np.arange(-4, 4, 0.087) # [m unit]
 
 conv_B = 1e5 # Multiply with conv_B for convert the unit m/s^2 to mGal
 
@@ -152,6 +154,17 @@ ax = plt.axes(projection ='3d')
 cont = ax.contourf(xx, yy, M_data , cmap = 'plasma')
 # Add a color bar which maps values to colors.
 fig.colorbar(cont, shrink=0.5, aspect=5)
+
+# Center of Mass Calculation
+
+X_m_d = np.sum(M_data, axis = 0)
+Y_m_d = np.sum(M_data, axis = 1)
+
+X_cm = x[np.where(X_m_d==max(X_m_d))[0][0]]
+Y_cm = y[np.where(Y_m_d==max(Y_m_d))[0][0]]
+
+print("Estimated center of Mass: (X, Y) ({0:.4f}, {1:.4f}) ".format(X_cm, Y_cm))
+
 
 np.savetxt('mass.csv', M_data, delimiter=',')
 
